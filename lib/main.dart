@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'sites/startPage.dart';
+import 'package:verdi_jugend_streikerfassung/routes.dart';
+import 'sites/welcomePage.dart';
+import 'styles.dart';
 
 void main() => runApp(MyApp());
 
+String appTitle = "ver.di Jugend Streikerfassung";
+
 class MyApp extends StatelessWidget {
-  String _title = "ver.di Streikerfassung";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '$_title',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: StartPage(title: ""),
+      title: '$appTitle',
+      theme: appTheme,
+      onGenerateRoute: generalRoutes(),
     );
   }
 }
