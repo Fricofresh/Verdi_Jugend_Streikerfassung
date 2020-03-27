@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:verdi_jugend_streikerfassung/sites/becomeMemberPage.dart';
+import 'package:verdi_jugend_streikerfassung/sites/notificationKontaktPage.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 
 class WantBecomeMemberPage extends StatelessWidget {
@@ -22,12 +24,14 @@ Möchtest du ver.di Mitglied werden?
             RaisedButton(
               color: Colors.blue,
               child: Text("Ja, gern!"),
-              onPressed: () {},
+              onPressed: () =>
+                  Navigator.pushNamed(context, BecomeMemberPage.routeId),
             ),
             FlatButton(
               child: Text(
                   "Nein, das Ergebnis der Tarifrunde ist mir nicht so wichtig."),
-              onPressed: () {},
+              onPressed: () =>
+                  Navigator.pushNamed(context, NotificationKontaktPage.routeId),
             ),
           ],
         ),

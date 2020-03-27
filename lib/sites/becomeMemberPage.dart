@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verdi_jugend_streikerfassung/sites/thanksForJoiningPage.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 
 class BecomeMemberPage extends StatelessWidget {
@@ -7,8 +8,13 @@ class BecomeMemberPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
-      title: null,
-      children: <Widget>[],
+      title: "Mitgliederwerden",
+      children: <Widget>[
+        RaisedButton(
+            child: Text("weiter"),
+            onPressed: () =>
+                Navigator.pushNamed(context, ThanksForJoiningPage.routeId)),
+      ],
     );
   }
 }
