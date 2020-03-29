@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verdi_jugend_streikerfassung/sites/finishPage.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 
 class NotificationKontaktPage extends StatelessWidget {
@@ -6,6 +7,13 @@ class NotificationKontaktPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(title: null, children: []);
+    return BaseLayout(
+        title:
+            "Such auf Telegram den @VERDIJugendtarifkampagneBot und schick ihm eine Nachricht mit /start Schon bist du dabei!",
+        children: [
+          RaisedButton(
+              child: Text("Weiter"),
+              onPressed: () => Navigator.pushNamed(context, FinishPage.routeId))
+        ]);
   }
 }

@@ -9,7 +9,7 @@ class CompanyPage extends StatelessWidget {
     return BaseLayout(
       title: "In welchem Betrieb/welcher Dienststelle arbeitest du?",
       children: [
-        //TODO
+        //TODO add Items
         DropdownButton(items: null, onChanged: null),
         RaisedButton(
           child: Text("weiter"),
