@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verdi_jugend_streikerfassung/sites/membershipNumberPage.dart';
 import 'package:verdi_jugend_streikerfassung/sites/wantBecomeMember.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 
@@ -24,7 +25,8 @@ Bist du ver.di Mitglied?""",
             RaisedButton(
               color: Colors.blue,
               child: Text("Na logo!"),
-              onPressed: () {},
+              onPressed: () =>
+                  Navigator.pushNamed(context, MembershipNumberPage.routeId),
             ),
             RaisedButton(
               child: Text("Ne noch nicht."),
