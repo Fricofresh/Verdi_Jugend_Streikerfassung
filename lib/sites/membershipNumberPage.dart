@@ -28,27 +28,55 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
        im Betreff der Abbuchung in deiner Kontoumsatzanzeige""",
       children:
       [
-        new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Radio(
-              value: 0,
-              groupValue: _radiobuttonvalue,
-              onChanged: (value) => _handleswitch(value),
-            ),
-            new Radio(
-              value: 1,
-              groupValue: _radiobuttonvalue,
-              onChanged: (value) => _handleswitch(value),
-            ),
-          ],
-        )
-      ],
+         new Row
+	    (
+		  crossAxisAlignment: CrossAxisAlignment.center,
+		  children: <Widget>
+		  [
+		    new Radio
+		    (
+			  value: 0,
+			  groupValue: _radiobuttonvalue,
+			  onChanged: (value) => _handleswitch(value),
+		    ),
+		    new Flexible
+		    (
+			  child:
+			  (
+			  	new TextField
+				(
+				   controller: new TextEditingController(),
+				   decoration: InputDecoration
+				   (
+				   	border: OutlineInputBorder(),
+				   	labelText: 'Mitgliedsnummer',
+				   )
+				)
+			  )
+		    )
+		  ],
+	    ),
+	    new Row
+	    (
+		  children: <Widget>
+		  [
+		    new Radio
+		    (
+			 value: 1,
+			 groupValue: _radiobuttonvalue,
+			 onChanged: (value) => _handleswitch(value),
+			),
+		  ]
+		)
+	 ],
     );
   }
 
   void _handleswitch(value)
   {
-      _radiobuttonvalue = value;
+	setState(()
+	 {
+	    _radiobuttonvalue = value;
+	 });
   }
 }
