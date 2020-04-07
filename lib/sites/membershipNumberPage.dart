@@ -13,8 +13,11 @@ class MembershipNumberPage extends StatefulWidget
 
 class MembershipNumberPageState extends State<MembershipNumberPage>
 {
-  
+   DateTime selectedDate = DateTime.now();
+   TextEditingController _ted;
    int _radiobuttonvalue = 1;
+   bool _isrdmitgliedsnummerenabled = true;
+   bool _isrdnomitgliedsnummerenabled = false;
    
   @override
   Widget build(BuildContext context)
@@ -41,10 +44,12 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
 		    ),
 		    new Flexible
 		    (
+			  fit: FlexFit.loose,
 			  child:
 			  (
 			  	new TextField
 				(
+				   enabled: _isrdmitgliedsnummerenabled,
 				   controller: new TextEditingController(),
 				   decoration: InputDecoration
 				   (
@@ -66,17 +71,106 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
 			 groupValue: _radiobuttonvalue,
 			 onChanged: (value) => _handleswitch(value),
 			),
+			new Text
+			(
+			   'Habe ich grade nicht da :/'
+			)
 		  ]
-		)
+		),
+	    new Row
+		(
+		  children: <Widget>
+		  [
+		     new Flexible
+		  	(
+		  		child: new TextField
+				 (
+				   	enabled: _isrdnomitgliedsnummerenabled,
+		  			controller: new TextEditingController(),
+  					decoration: InputDecoration
+  					(
+						border: OutlineInputBorder(),
+						labelText: 'Name',
+			   		)
+				)
+			)
+		  ]
+	    ),
+	    new Row
+		  (
+		  children: <Widget>
+		  [
+			new Flexible
+			   (
+			   child: new TextField
+				 (
+				 enabled: _isrdnomitgliedsnummerenabled,
+				 controller: new TextEditingController(),
+				 decoration: InputDecoration
+				    (
+				    border: OutlineInputBorder(),
+				    labelText: 'Vorname',
+				 )
+			   )
+			)
+		  ]
+	    ),
+	    new Row
+		  (
+		  children: <Widget>
+		  [
+			new Flexible
+			   (
+			   child: new TextFormField
+				 (
+				 	enabled: _isrdnomitgliedsnummerenabled,
+				 	onTap: () => _selectDate(context),
+				 	
+				 	controller: _ted = new TextEditingController(),
+				 	decoration: InputDecoration
+				    (
+				    	border: OutlineInputBorder(),
+				    	labelText: 'Geburtsdatum',
+				 	)
+			   )
+			)
+		  ]
+	    )
 	 ],
     );
   }
 
+   Future<Null> _selectDate(BuildContext context) async
+   {
+	 final DateTime picked = await showDatePicker
+	    (
+	    	context: context,
+	    	initialDate: selectedDate,
+	    	firstDate: DateTime(2015, 8),
+	    	lastDate: DateTime(2101));
+	 if (picked != null && picked != selectedDate)
+	    setState(()
+	    {
+		  selectedDate = picked;
+		  _ted.text = selectedDate.toIso8601String(); // async!
+	    });
+   }
+  
   void _handleswitch(value)
   {
 	setState(()
 	 {
 	    _radiobuttonvalue = value;
+	    if(value == 1)
+	       {
+	       	_isrdmitgliedsnummerenabled = false;
+	       	_isrdnomitgliedsnummerenabled = true;
+		  }
+	    else
+	       {
+	          _isrdmitgliedsnummerenabled = true;
+	          _isrdnomitgliedsnummerenabled = false;
+		  }
 	 });
   }
 }
