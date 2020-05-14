@@ -38,3 +38,10 @@ app.*.symbols
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+pubspec.lock
+android/app/.project
+android/.project
+android/app/.classpath
+ios/Runner/Info.plist
+.vscode/
+*org.eclipse.buildship.core.prefs

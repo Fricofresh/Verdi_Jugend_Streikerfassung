@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verdi_jugend_streikerfassung/sites/membershipNumberPage.dart';
 import 'package:verdi_jugend_streikerfassung/sites/wantBecomeMember.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
@@ -14,10 +17,11 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
+    resetData();
     return BaseLayout(
       title: """Herzlich willkommen zum Streiktag!
-Nice, dass du am Start bist.
-Bist du ver.di Mitglied?""",
+    Nice, dass du am Start bist.
+    Bist du ver.di Mitglied?""",
       children: [
         ButtonBar(
           alignment: MainAxisAlignment.center,
@@ -37,5 +41,12 @@ Bist du ver.di Mitglied?""",
         ),
       ],
     );
+  }
+
+  void resetData() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    if (!await pref.clear()) {
+      log("!!!!!!!! Daten konnten nicht gelöscht werden !!!!!!");
+    }
   }
 }
