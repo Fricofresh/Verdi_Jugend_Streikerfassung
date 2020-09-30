@@ -25,8 +25,8 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
     return BaseLayout
       (
        title: """Bitte trage hier deine Mitgliedsnummer ein.
-           Steht auf deinem Mitgliedsausweis oder
-       im Betreff der Abbuchung in deiner Kontoumsatzanzeige""",
+           (Steht auf deinem Mitgliedsausweis oder
+       im Betreff der Abbuchung in deiner Kontoumsatzanzeige)""",
        children: <Widget>
        [
          new Row
@@ -140,13 +140,88 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                          firstDate:DateTime(1900),
                          lastDate: DateTime(2100)
                       );
-                      _ted.text = date.toIso8601String();
+                      _ted.text = date.toIso8601String(); // Nullpointerexception wenn kein Datum ausgewähöt wird
                     }
                  )
               )
             ]
-         )
-       ]
+         ),
+         new Row
+            (
+            children: <Widget>
+            [
+               new Flexible
+                  (
+                  child: new TextField
+                     (
+                     controller: new TextEditingController(),
+                     decoration: InputDecoration
+                        (
+                        border: OutlineInputBorder(),
+                        labelText: 'Betrieb / Dienststelle',
+                     )
+                  )
+               )
+            ]
+         ),
+          new Row
+             (
+             children: <Widget>
+             [
+                new Flexible
+                   (
+                   child: new TextField
+                      (
+                      controller: new TextEditingController(),
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration
+                         (
+                         border: OutlineInputBorder(),
+                         labelText: 'Wochenarbeitzszeit in Stunden',
+                      )
+                   )
+                )
+             ]
+          ),
+          new Row
+             (
+             children: <Widget>
+             [
+                new Flexible
+                   (
+                   child: new TextField
+                      (
+                      controller: new TextEditingController(),
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration
+                         (
+                         border: OutlineInputBorder(),
+                         labelText: 'Durch Streik ausgefallene Stunden (ohne '
+                            'Pausen!',
+                      )
+                   )
+                )
+             ]
+          ),
+         new ButtonBar
+           (
+            alignment: MainAxisAlignment.center,
+            children: <Widget>
+            [
+               RaisedButton
+               (
+                  color: Colors.blue,
+                  child: Text("Weiter"),
+                  onPressed: () =>  Navigator.pushNamed(context, MembershipNumberPage.routeId),
+               ),
+               RaisedButton
+               (
+               child: Text("Zurück"),
+               onPressed: () =>  Navigator.pop(context)
+               )
+            ]
+          )
+     ]
     );
   }
   
