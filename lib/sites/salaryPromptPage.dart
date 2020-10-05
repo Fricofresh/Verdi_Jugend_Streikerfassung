@@ -11,15 +11,21 @@ class SalaryPromptPage extends StatefulWidget
   
 }
 
-enum WidgetMarker { graph, azubifrage }
+enum FirstWidgetMarker { empty, apprenticequestion }
+enum SecondWidgetMarker {apprentice, employee}
+
 
 class SalaryPromptPageState extends State<SalaryPromptPage>
 {
   int _rdgroupsalaryvalue = 0;
   int _rdgroupapprenticevalue = 0;
+  int _rdgroupchildallowance = 0;
+  int _rdpartnerstriking = 9;
   bool _isrdcurrentsalaryenabled = true;
-  bool _isrddunnoenabled = false;
-  WidgetMarker selectedWidgetMarker = WidgetMarker.graph;
+  bool _isrdchildallowanceenabled = true;
+  
+  FirstWidgetMarker selectedfirstWidgetMarker = FirstWidgetMarker.empty;
+  SecondWidgetMarker selectedsecondWidgetMarker = SecondWidgetMarker.apprentice;
   
   @override
   Widget build(BuildContext context)
@@ -76,8 +82,54 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
          ),
          new Container
          (
-            child: getCustomContainer(),
+            child: getFirstCustomContainer(),
          ),
+         new Row(children: <Widget> [new Text('Hast du kindergeldberechtigte Kinder?')]),
+         new Row
+         (
+            children:
+            [
+               new Radio(value: 0, groupValue: _rdgroupchildallowance, onChanged: (value) => _handleswitchchildallowance(value)),
+               new Text('Ja'),
+               new Expanded(child:
+                  new TextField
+                  (
+                     enabled: _isrdchildallowanceenabled,
+                     controller: new TextEditingController(),
+                     decoration: InputDecoration
+                     (
+                        border: OutlineInputBorder(),
+                        labelText: 'Wieviele?',
+                     )
+                  ))
+            ]
+         ),
+         new Row
+         (
+            children:
+            [
+               new Radio(value: 1, groupValue: _rdgroupchildallowance, onChanged: (value) => _handleswitchchildallowance(value)),
+               new Text('Nein')
+            ]
+         ),
+          new Row(children: <Widget> [new Text('Hast du eine Partner*in '
+             'der/die ebenfalls am heutigen Streik beteiligt ist?')]),
+          new Row
+             (
+             children:
+             [
+                new Radio(value: 0, groupValue: _rdpartnerstriking, onChanged: (value) => _handleswitchpartnerstriking(value)),
+                new Text('Ja')
+             ]
+          ),
+          new Row
+             (
+             children:
+             [
+                new Radio(value: 1, groupValue: _rdpartnerstriking, onChanged: (value) => _handleswitchpartnerstriking(value)),
+                new Text('Nein')
+             ]
+          ),
          new ButtonBar
            (
             alignment: MainAxisAlignment.center,
@@ -100,54 +152,86 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
     );
   }
 
-  Widget getGraphWidget() {
+  Widget getEmptyWidget() {
      return new Row();
   }
 
-  Widget getAzubiFrageWidget()
+  Widget getApprenticeQuestionWidget()
   {
-     return new Row
+     return new Column
         (
          children:
          [
-            new Row(children:[new Text('Ich bin')]),
-            new Row(children:
-            [
-              new Radio
-              (
-                  value: 0,
-                  groupValue: _rdgroupapprenticevalue,
-                  onChanged: null
-              ),
-              new Text('Azubi')
-           ]),
-            new Row(children: 
-            [
-               new Radio
-               (
-                  value: 1,
-                  groupValue: _rdgroupapprenticevalue,
-                  onChanged: null
-               ),
-               new Text('Beschäftigte*r')
-            ])
+            new Text('Ich bin'),
+            new Row
+            (
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:
+                [
+                   new Radio
+                   (
+                      value: 0,
+                      groupValue: _rdgroupapprenticevalue,
+                      onChanged: (value) => _handleswitchapprenticequestion(value)
+                   ),
+                   new Text('Azubi')
+                ]
+            ),
+            new Row
+            (
+               mainAxisAlignment: MainAxisAlignment.center,
+               children:
+               [
+                  new Radio
+                  (
+                     value: 1,
+                     groupValue: _rdgroupapprenticevalue,
+                     onChanged: (value) => _handleswitchapprenticequestion(value)
+                  ),
+                  new Text('Beschäftigte*r'),
+               ]
+            ),
+            new Row
+            (
+               mainAxisAlignment: MainAxisAlignment.center,
+               children:
+               [
+                   new Container(child: getSecondCustomContainer())
+               ]
+            )
          ]);
   }
 
-  Widget getCustomContainer()
+  Widget getFirstCustomContainer()
   {
-     switch (selectedWidgetMarker)
+     switch (selectedfirstWidgetMarker)
      {
-        case WidgetMarker.graph:
+        case FirstWidgetMarker.empty:
            {
-               return getGraphWidget();
+               return getEmptyWidget();
            }
-        case WidgetMarker.azubifrage:
+        case FirstWidgetMarker.apprenticequestion:
            {
-           return MyStatelessWidget();
+           return getApprenticeQuestionWidget();
            }
      }
-     return getGraphWidget();
+     return getEmptyWidget();
+  }
+
+  Widget getSecondCustomContainer()
+  {
+     switch (selectedsecondWidgetMarker)
+     {
+        case SecondWidgetMarker.apprentice:
+           {
+              return getApprenticeWidget();
+           }
+        case SecondWidgetMarker.employee:
+           {
+              return getEmployeeWidget();
+           }
+     }
+     return getEmptyWidget();
   }
   
   void _handleswitchsalaryquestion(value)
@@ -158,32 +242,106 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
       if(value == 1)
       {
         _isrdcurrentsalaryenabled = false;
-        _isrddunnoenabled = true;
-        selectedWidgetMarker = WidgetMarker.azubifrage;
+        selectedfirstWidgetMarker = FirstWidgetMarker.apprenticequestion;
       }
       else
       {
         _isrdcurrentsalaryenabled = true;
-        _isrddunnoenabled = false;
-        selectedWidgetMarker = WidgetMarker.graph;
+        selectedfirstWidgetMarker = FirstWidgetMarker.empty;
       }
     });
   }
-}
 
-class MyStatelessWidget extends StatelessWidget
-{
-   @override
-   Widget build(BuildContext context)
-   {
-      return new Row
-      (
-         children:
+  void _handleswitchapprenticequestion(value)
+  {
+     setState(()
+     {
+        _rdgroupapprenticevalue = value;
+        if(value == 1)
+        {
+           selectedsecondWidgetMarker = SecondWidgetMarker.employee;
+        }
+        else
+        {
+           selectedsecondWidgetMarker = SecondWidgetMarker.apprentice;
+        }
+     });
+  }
+
+  void _handleswitchchildallowance(value)
+  {
+     setState(()
+     {
+        _rdgroupchildallowance = value;
+        if(value == 1)
+        {
+          _isrdchildallowanceenabled = false;
+        }
+        else
+        {
+           _isrdchildallowanceenabled = true;
+        }
+     });
+  }
+
+  void _handleswitchpartnerstriking(value)
+  {
+     setState(()
+     {
+        _rdpartnerstriking = value;
+     });
+  }
+
+  Widget getApprenticeWidget() 
+  {
+     return new Expanded(child: new Column
+     (
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
          [
-            new Row(children: [new Text('This works')]),
-            new Row(children: [new Text('This works')])
+            new Row(
+               children: <Widget>
+               [
+                  new Text('Azubi im '),
+                  new Expanded(child: new TextField
+                  (
+                     controller: new TextEditingController(),
+                     decoration: InputDecoration
+                     (
+                        border: OutlineInputBorder(),
+                        labelText: '1, 2 oder 3',
+                     )
+                  )),
+                  new Text(' Lehrjahr')
+               ])
          ]
-      );
-   }
-   
+     ));
+  }
+
+  Widget getEmployeeWidget()
+  {
+     return new Expanded(child: new Column
+        (
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
+        [
+           new Row(
+              children: <Widget>
+              [
+                 new Text('Beschäftigte*r in der '),
+                 new Expanded(child: new TextField
+                    (
+                    controller: new TextEditingController(),
+                    decoration: InputDecoration
+                       (
+                       border: OutlineInputBorder(),
+                       labelText: 'xten',
+                    )
+                 )),
+                 new Text(' Entgeltgruppe')
+              ])
+        ]
+     ));
+  }
+  
 }
