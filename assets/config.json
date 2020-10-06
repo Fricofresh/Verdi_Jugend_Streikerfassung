@@ -1,0 +1,11 @@
+{
+    "ws.host": "localhost",
+    "ws.port": 8080,
+    "ws.path": "/v1/users",
+
+    "client.cert.path": "somepath",
+    "client.cert.password": "somepassword",
+
+    "client.privatekey.path": "somepath",
+    "client.privatekey.password": "somepassword"
+}

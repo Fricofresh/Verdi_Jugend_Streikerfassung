@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:verdi_jugend_streikerfassung/util/SharedPreferencesExtension.dart';
-import 'package:shared_preferences/shared_preferences.dart'
-    show SharedPreferences;
 import 'package:verdi_jugend_streikerfassung/sites/thanksForJoiningPage.dart';
+import 'package:verdi_jugend_streikerfassung/util/sigleton.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -20,6 +18,7 @@ class _BecomeMemberPageState extends State<BecomeMemberPage> {
   Completer<WebViewController> _controller = Completer<WebViewController>();
   bool _isRegistered = false;
   var initUrl = "https://mitgliedwerden.verdi.de/beitritt/verdi";
+  // var initUrl = "https://localhost:8000/test.html";
   final String propertyId = "isNewMember";
   @override
   Widget build(BuildContext context) {
@@ -48,9 +47,8 @@ class _BecomeMemberPageState extends State<BecomeMemberPage> {
         ),
         RaisedButton(
           child: Text("weiter"),
-          onPressed: _isRegistered
-              ? () => goToNextPage()
-              : kDebugMode ? () => goToNextPage() : null,
+          onPressed: _isRegistered ? () => goToNextPage() : kDebugMode ? () => goToNextPage() : null,
+          // onPressed: _isRegistered ? () => goToNextPage() : null,
         ),
       ],
     );
@@ -71,8 +69,8 @@ class _BecomeMemberPageState extends State<BecomeMemberPage> {
   }
 
   void goToNextPage() async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setBool(pref.createKey(BecomeMemberPage.routeId), _isRegistered);
+    final SingletonModel pref = SingletonModel();
+    pref.addData({pref.createKey(BecomeMemberPage.routeId): _isRegistered});
     Navigator.pushNamed(context, ThanksForJoiningPage.routeId);
   }
 }

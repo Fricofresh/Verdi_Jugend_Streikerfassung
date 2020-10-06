@@ -45,3 +45,4 @@ android/app/.classpath
 ios/Runner/Info.plist
 .vscode/
 *org.eclipse.buildship.core.prefs
+*.lock
