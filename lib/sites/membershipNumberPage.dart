@@ -156,11 +156,11 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                   child: new TextField
                      (
                      controller: new TextEditingController(),
-                     decoration: InputDecoration
-                        (
-                        border: OutlineInputBorder(),
-                        labelText: 'Betrieb / Dienststelle',
-                     )
+  decoration: InputDecoration
+  (
+  border: OutlineInputBorder(),
+  labelText: 'Betrieb / Dienststelle',
+  )
                   )
                )
             ]
