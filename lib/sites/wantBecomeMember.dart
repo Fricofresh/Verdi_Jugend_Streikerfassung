@@ -9,7 +9,7 @@ import 'package:verdi_jugend_streikerfassung/util/sigleton.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 
 class WantBecomeMemberPage extends StatelessWidget {
-  TextEditingController textEditingController = TextEditingController();
+  final TextEditingController textEditingController = TextEditingController();
 
   static const String routeId = "/wantBecomeMember";
 
