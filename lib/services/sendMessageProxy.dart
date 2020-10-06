@@ -1,18 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:verdi_jugend_streikerfassung/util/sigleton.dart';
+import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 
 class SendMessageProxy {
   bool _saveToFile = true;
-  Future<String> sendData() async {
+
+  bool sendData() async {
     if (_saveToFile) {
       writeData();
     }
 
-    SingletonModel clientInputs = SingletonModel();
+    var clientInputs = UserModelProvider().getCurrendUser();
     String clientInputsJson = clientInputs.toJson();
     SharedPreferences settings = await SharedPreferences.getInstance();
     var host = settings.getString("ws.host");
@@ -30,13 +32,15 @@ class SendMessageProxy {
       ..write(clientInputsJson);
     HttpClientResponse response = await request.close();
     await utf8.decoder.bind(response).forEach(print);
-    return await utf8.decoder.bind(response).join("\n");
+
+    return response.statusCode == HttpStatus.ok;
   }
 
   void writeData() async {
     Directory appdoc = await getApplicationDocumentsDirectory();
-    SingletonModel model = SingletonModel();
-    File localFile = File(appdoc.path + "/${model.getData()["forename"]}.${model.getData()["surname"]}.txt");
+    var model = UserModelProvider().getCurrendUser();
+    // File localFile = File(appdoc.path + "/${model["forename"]}.${model.getData()["surname"]}.txt");
+    File localFile = File(appdoc.path + "/${TimeOfDay.now()}.txt"); // TODO REMOVE
     localFile.writeAsString(model.toJson(), mode: FileMode.append);
     print(localFile.absolute);
   }

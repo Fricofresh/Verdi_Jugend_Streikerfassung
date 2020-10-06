@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:verdi_jugend_streikerfassung/sites/thanksForJoiningPage.dart';
-import 'package:verdi_jugend_streikerfassung/util/sigleton.dart';
+import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -69,7 +69,7 @@ class _BecomeMemberPageState extends State<BecomeMemberPage> {
   }
 
   void goToNextPage() async {
-    final SingletonModel pref = SingletonModel();
+    final UserModel pref = UserModel();
     pref.addData({pref.createKey(BecomeMemberPage.routeId): _isRegistered});
     Navigator.pushNamed(context, ThanksForJoiningPage.routeId);
   }
