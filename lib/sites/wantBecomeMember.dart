@@ -39,7 +39,7 @@ Möchtest du ver.di Mitglied werden?
   }
 
   Future<Object> handleOnPressed(bool isNewMember, Future<Object> onPressFunction) async {
-    var pref = UserModelProvider().getCurrendUser();
+    var pref = UserModelProvider().getCurrentUser();
     // pref.addData({pref.createKey(PersonalDetailsPage.routeId): isNewMember});
     return onPressFunction;
   }

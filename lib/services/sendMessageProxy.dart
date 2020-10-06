@@ -14,7 +14,7 @@ class SendMessageProxy {
       writeData();
     }
 
-    var clientInputs = UserModelProvider().getCurrendUser();
+    var clientInputs = UserModelProvider().getCurrentUser();
     String clientInputsJson = clientInputs.toJson();
     SharedPreferences settings = await SharedPreferences.getInstance();
     var host = settings.getString("ws.host");
@@ -38,7 +38,7 @@ class SendMessageProxy {
 
   void writeData() async {
     Directory appdoc = await getApplicationDocumentsDirectory();
-    var model = UserModelProvider().getCurrendUser();
+    var model = UserModelProvider().getCurrentUser();
     // File localFile = File(appdoc.path + "/${model["forename"]}.${model.getData()["surname"]}.txt");
     File localFile = File(appdoc.path + "/${TimeOfDay.now()}.txt"); // TODO REMOVE
     localFile.writeAsString(model.toJson(), mode: FileMode.append);

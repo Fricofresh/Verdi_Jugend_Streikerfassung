@@ -69,7 +69,7 @@ class _BecomeMemberPageState extends State<BecomeMemberPage> {
   }
 
   void goToNextPage() async {
-    var pref = UserModelProvider().getCurrendUser();
+    var pref = UserModelProvider().getCurrentUser();
     // pref.addData({pref.createKey(BecomeMemberPage.routeId): _isRegistered});
     Navigator.pushNamed(context, ThanksForJoiningPage.routeId);
   }
