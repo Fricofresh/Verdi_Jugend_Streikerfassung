@@ -15,6 +15,7 @@ import 'package:verdi_jugend_streikerfassung/sites/thanksForJoiningPage.dart';
 import 'package:verdi_jugend_streikerfassung/sites/wantBecomeMember.dart';
 import 'package:verdi_jugend_streikerfassung/sites/welcomePage.dart';
 import 'package:verdi_jugend_streikerfassung/sites/salaryPromptPage.dart';
+import 'package:verdi_jugend_streikerfassung/sites/transferarrangements.dart';
 
 Map<String, Widget Function()> get allRoutes {
   return {
@@ -33,7 +34,8 @@ Map<String, Widget Function()> get allRoutes {
     AccountDetailPage.routeId: () => AccountDetailPage(),
     NewsletterPage.routeId: () => NewsletterPage(),
     FinishPage.routeId: () => FinishPage(),
-    SalaryPromptPage.routeId: () => SalaryPromptPage()
+    SalaryPromptPage.routeId: () => SalaryPromptPage(),
+    TransferArrangementsPage.routeId: () => TransferArrangementsPage(),
   };
 }
 

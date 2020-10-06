@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
+import 'package:verdi_jugend_streikerfassung/sites/transferarrangements.dart';
 
 class SalaryPromptPage extends StatefulWidget
 {
@@ -139,7 +140,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                (
                   color: Colors.blue,
                   child: Text("Weiter"),
-                  onPressed: () =>  Navigator.pushNamed(context, SalaryPromptPage.routeId)
+                  onPressed: () =>  Navigator.pushNamed(context, TransferArrangementsPage.routeId)
                ),
                RaisedButton
                (
