@@ -6,8 +6,9 @@ import 'package:verdi_jugend_streikerfassung/sites/notificationKontaktPage.dart'
 import 'package:verdi_jugend_streikerfassung/sites/personalDetailsPage.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 
-class WantBecomeMemberPage extends StatelessWidget {
-  TextEditingController textEditingController = TextEditingController();
+class WantBecomeMemberPage extends StatelessWidget
+{
+    final TextEditingController textEditingController = TextEditingController();
 
   static const String routeId = "/wantBecomeMember";
 
@@ -44,7 +45,8 @@ Möchtest du ver.di Mitglied werden?
   }
 
   Future<Object> handleOnPressed(
-      bool mitgliedWerden, Future<Object> onPressFunction) async {
+      bool mitgliedWerden, Future<Object> onPressFunction) async
+  {
     return onPressFunction;
   }
 }
