@@ -9,7 +9,7 @@ import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 class SendMessageProxy {
   bool _saveToFile = true;
 
-  bool sendData() async {
+  Future<bool> sendData() async {
     if (_saveToFile) {
       writeData();
     }

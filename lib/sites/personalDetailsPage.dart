@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verdi_jugend_streikerfassung/util/SharedPreferencesExtension.dart';
 import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
-import 'package:verdi_jugend_streikerfassung/sites/notificationKontaktPage.dart';
+import 'package:verdi_jugend_streikerfassung/sites/TelegramChannelPage.dart';
 import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 import 'package:verdi_jugend_streikerfassung/util/utils.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
@@ -68,6 +68,6 @@ class PersonalDetailsPage extends StatelessWidget {
     var pref = UserModelProvider().getCurrendUser();
     // TODO fix
     // pref.addData({createKey(PersonalDetailsPage.routeId): this._isMember});
-    return Navigator.pushNamed(context, NotificationKontaktPage.routeId);
+    return Navigator.pushNamed(context, TelegramChannelPage.routeId);
   }
 }
