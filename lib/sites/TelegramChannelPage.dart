@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:verdi_jugend_streikerfassung/sites/finishPage.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 
-class NotificationKontaktPage extends StatelessWidget {
-  static const String routeId = "/notificationKontakt";
+class TelegramChannelPage extends StatelessWidget {
+  static const String routeId = "/telegramChannel";
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +12,7 @@ class NotificationKontaktPage extends StatelessWidget {
         children: [
           RaisedButton(
               child: Text("Weiter"),
-              onPressed: () => Navigator.pushNamed(context, FinishPage.routeId))
-        ]);
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false)
+     )]);
   }
 }

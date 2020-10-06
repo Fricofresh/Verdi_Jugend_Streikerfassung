@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
+import 'package:verdi_jugend_streikerfassung/sites/TelegramChannelPage.dart';
 
 class TransferArrangementsPage extends StatefulWidget
 {
@@ -157,7 +158,8 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
   {
      if(_rdgroupaccountchooser == 0)
       {
-         //Daten absenden
+         _sendData();
+         Navigator.pushNamed(context, TelegramChannelPage.routeId);
       }
      else
      {
@@ -173,7 +175,13 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
   void _handleContinueAlert()
   {
      Navigator.of(context).pop();
-     //Daten abschicken
+     _sendData();
+     Navigator.pushNamed(context, TelegramChannelPage.routeId);
+  }
+  
+  void _sendData()
+  {
+     //TODO: implement
   }
 }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verdi_jugend_streikerfassung/sites/becomeMemberPage.dart';
-import 'package:verdi_jugend_streikerfassung/sites/notificationKontaktPage.dart';
+import 'package:verdi_jugend_streikerfassung/sites/TelegramChannelPage.dart';
 import 'package:verdi_jugend_streikerfassung/sites/personalDetailsPage.dart';
 import 'package:verdi_jugend_streikerfassung/util/sharedPreferencesExtension.dart';
 import 'package:verdi_jugend_streikerfassung/util/sigleton.dart';
@@ -41,7 +41,8 @@ Möchtest du ver.di Mitglied werden?
     );
   }
 
-  Future<Object> handleOnPressed(bool isNewMember, Future<Object> onPressFunction) async {
+  Future<Object> handleOnPressed(bool isNewMember, Future<Object> onPressFunction) async
+  {
     final SingletonModel pref = SingletonModel();
     pref.addData({pref.createKey(PersonalDetailsPage.routeId): isNewMember});
     return onPressFunction;
