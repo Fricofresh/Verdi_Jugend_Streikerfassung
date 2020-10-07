@@ -23,11 +23,11 @@ class SendMessageProxy {
 
     var context = SecurityContext.defaultContext;
     context.useCertificateChain(settings.getString("client.cert.path"));
-
     context.usePrivateKey(settings.getString("client.privatekey.path"),
         password: settings.getString("client.privatekey.password"));
 
-    HttpClientRequest request = await HttpClient().post(host, port, path)
+    var url = Uri.parse("$host:$port$path");
+    HttpClientRequest request = await HttpClient(context: context).postUrl(url)
       ..headers.contentType = ContentType.json
       ..write(clientInputsJson);
     HttpClientResponse response = await request.close();
