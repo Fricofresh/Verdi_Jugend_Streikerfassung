@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 import 'package:verdi_jugend_streikerfassung/sites/salaryPromptPage.dart';
+import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 
 class MembershipNumberPage extends StatefulWidget
 {
@@ -14,8 +15,15 @@ class MembershipNumberPage extends StatefulWidget
 
 class MembershipNumberPageState extends State<MembershipNumberPage>
 {
-  DateTime selectedDate = DateTime.now();
-  TextEditingController _ted = new TextEditingController();
+  
+  TextEditingController _tecBirthday = new TextEditingController();
+  TextEditingController _tecMembershipNumber = new TextEditingController();
+  TextEditingController _tecName = new TextEditingController();
+  TextEditingController _tecPreName = new TextEditingController();
+  TextEditingController _tecCompany = new TextEditingController();
+  TextEditingController _tecWeeklyHours = new TextEditingController();
+  TextEditingController _tecStrikeTime = new TextEditingController();
+  
   int _radiobuttonvalue = 1;
   bool _isrdmitgliedsnummerenabled = true;
   bool _isrdnomitgliedsnummerenabled = false;
@@ -48,8 +56,9 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                 (
                    new TextField
                      (
+                      keyboardType: TextInputType.number,
                       enabled: _isrdmitgliedsnummerenabled,
-                      controller: new TextEditingController(),
+                      controller: _tecMembershipNumber,
                       decoration: InputDecoration
                         (
                         border: OutlineInputBorder(),
@@ -85,7 +94,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                  child: new TextField
                    (
                     enabled: _isrdnomitgliedsnummerenabled,
-                    controller: new TextEditingController(),
+                    controller: _tecName,
                     decoration: InputDecoration
                       (
                       border: OutlineInputBorder(),
@@ -104,7 +113,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                  child: new TextField
                    (
                     enabled: _isrdnomitgliedsnummerenabled,
-                    controller: new TextEditingController(),
+                    controller: _tecPreName,
                     decoration: InputDecoration
                       (
                       border: OutlineInputBorder(),
@@ -122,7 +131,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                 (
                  child: new TextFormField
                    (
-                    controller: _ted,
+                    controller: _tecBirthday,
                     decoration: InputDecoration
                       (
                       border: OutlineInputBorder(),
@@ -141,7 +150,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                          firstDate:DateTime(1900),
                          lastDate: DateTime(2100)
                       );
-                      _ted.text = date.toIso8601String(); // Nullpointerexception wenn kein Datum ausgewähöt wird
+                      _tecBirthday.text = date.toIso8601String(); // TODO: Nullpointerexception wenn kein Datum ausgewäht wird
                     }
                  )
               )
@@ -155,12 +164,12 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                   (
                   child: new TextField
                      (
-                     controller: new TextEditingController(),
-  decoration: InputDecoration
-  (
-  border: OutlineInputBorder(),
-  labelText: 'Betrieb / Dienststelle',
-  )
+                     controller: _tecCompany,
+                     decoration: InputDecoration
+                     (
+                        border: OutlineInputBorder(),
+                        labelText: 'Betrieb / Dienststelle',
+                     )
                   )
                )
             ]
@@ -173,7 +182,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                    (
                    child: new TextField
                       (
-                      controller: new TextEditingController(),
+                      controller: _tecWeeklyHours,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration
                          (
@@ -192,7 +201,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                    (
                    child: new TextField
                       (
-                      controller: new TextEditingController(),
+                      controller: _tecStrikeTime,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration
                          (
@@ -213,7 +222,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                (
                   color: Colors.blue,
                   child: Text("Weiter"),
-                  onPressed: () =>  Navigator.pushNamed(context, SalaryPromptPage.routeId),
+                  onPressed: () => _handleContinue(),
                ),
                RaisedButton
                (
@@ -242,6 +251,37 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
         _isrdnomitgliedsnummerenabled = false;
       }
     });
+  }
+  
+  void _handleContinue()
+  {
+     _fillUserData();
+     
+     Navigator.pushNamed(context, SalaryPromptPage.routeId);
+  }
+  
+  void _fillUserData()
+  {
+     UserModel user = new UserModelProvider().getCurrentUser();
+     
+     user.flgMember = true;
+     user.strikeDetails.company = _tecCompany.text;
+     user.strikeDetails.weeklyhours = double.parse(_tecWeeklyHours.text);
+     user.strikeDetails.striketime = double.parse(_tecStrikeTime.text);
+     
+     if(_isrdmitgliedsnummerenabled)
+     {
+         user.flgMembershipNumber = true;
+         user.membershipNumber = _tecMembershipNumber.text;
+     }
+     else
+     {
+         user.name = _tecName.text;
+         user.prename = _tecPreName.text;
+         user.birthday = _tecBirthday.text;
+     }
+     
+     
   }
 }
 

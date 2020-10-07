@@ -1,90 +1,228 @@
 import 'dart:convert';
 import 'package:verdi_jugend_streikerfassung/services/sendMessageProxy.dart';
 
-class UserModelProvider {
+class UserModelProvider
+{
   static final UserModelProvider _instance = UserModelProvider._internal();
 
   factory UserModelProvider() => _instance;
 
-  _UserModel _currendUserModel;
+  UserModel _currentUserModel;
 
-  UserModelProvider._internal() {
-    if (_currendUserModel == null) {
-      _currendUserModel = _UserModel();
+  UserModelProvider._internal()
+  {
+    if (_currentUserModel == null)
+    {
+      _currentUserModel = UserModel();
     }
   }
 
-  _UserModel getCurrendUser() {
-    return _UserModel();
+  UserModel getCurrentUser()
+  {
+    return _currentUserModel;
   }
 
-  Future<bool> saveAndResetCurrendUser() async {
-    if (!await SendMessageProxy().sendData()) {
+  Future<bool> saveAndResetCurrentUser() async
+  {
+    if (!await SendMessageProxy().sendData())
+    {
       return false;
     }
-    _currendUserModel = _UserModel();
+    _currentUserModel = UserModel();
     return true;
   }
 }
 
-class _UserModel {
-  // TODO Model
-  bool becomeMember;
+class UserModel
+{
+  bool _flgMember;
+  bool _flgNumber;
+  bool _flgGrossSalary;
+  bool _flgKnowSalary;
+  bool _flgChildren;
+  bool _flgPartner;
+  bool _flgAccount;
+  
+  String _membershipNumber;
+  String _name;
+  String _prename;
+  String _birthday;
+  String _email;
+  String _iban;
+  String _bic;
+  int _children;
+  SalaryData _salaryData = new SalaryData();
+  StrikeDetails _strikeDetails = new StrikeDetails();
 
-  _AccoundDetails accountDetail;
+  bool get flgMember  => _flgMember;
+  bool get flgAccount  => _flgAccount;
+  bool get flgMembershipNumber => _flgNumber;
+  bool get flgGrossSalary => _flgGrossSalary;
+  bool get flgKnowSalary => _flgKnowSalary;
+  bool get flgChildren => _flgChildren;
+  bool get flgPartner => _flgPartner;
+  String get membershipNumber => _membershipNumber;
+  String get name => _name;
+  String get prename => _prename;
+  String get birthday => _birthday;
+  String get email => _email;
+  String get iban => _iban;
+  String get bic => _bic;
+  int get children => _children;
+  SalaryData get salaryData => _salaryData;
+  StrikeDetails get strikeDetails => _strikeDetails;
+  
+  set flgMember(bool value)
+  {
+    _flgMember = value;
+  }
+  
+  set flgAccount(bool value)
+  {
+    _flgAccount = value;
+  }
+  
+  set flgMembershipNumber(bool value)
+  {
+    _flgNumber = value;
+  }
+  
+  set flgGrossSalary(bool value)
+  {
+    _flgGrossSalary = value;
+  }
+  
+  set flgKnowSalary(bool value)
+  {
+    _flgKnowSalary = value;
+  }
+  
+  set flgChildren(bool value)
+  {
+    _flgChildren = value;
+  }
+  
+  set flgPartner(bool value)
+  {
+    _flgPartner = value;
+  }
+  
+  set membershipNumber(String value)
+  {
+    _membershipNumber = value;
+  }
+  
+  set name(String value)
+  {
+    _name = value;
+  }
+  
+  set prename(String value)
+  {
+    _prename = value;
+  }
+  
+  set birthday(String value)
+  {
+    _birthday = value;
+  }
+  
+  set email(String value)
+  {
+    _email = value;
+  }
+  
+  set iban(String value)
+  {
+    _iban = value;
+  }
+  
+  set bic(String value)
+  {
+    _bic = value;
+  }
+  
+  set children(int value)
+  {
+    _children = value;
+  }
 
-  String childBenefit;
+  set strikeDetails(StrikeDetails value)
+  {
+    _strikeDetails = value;
+  }
 
-  String company;
+  set salaryData(SalaryData value)
+  {
+    _salaryData = value;
+  }
 
-  String coPartner;
-
-  String currentSalary;
-
-  _GenerallSalaryData generallSalaryData;
-
-  double lostWorkingHours;
-
-  BigInt membershipNumber;
-
-  _PersonalDetails personalDetails;
-
-  bool strikePay;
-
-  bool wantBecomeMember;
-
-  double workingHours;
-
-  String toJson() {
+  String toJson()
+  {
     String result = jsonEncode(this);
     return result;
   }
 }
+class SalaryData
+{
+  bool _isApprentice;
+  double _grosssalary;
+  String _salarygroup;
+  int _apprenticeshipyear;
 
-class _AccoundDetails {
-  int id;
+  int get apprenticeshipyear => _apprenticeshipyear;
 
-  String iban;
+  set apprenticeshipyear(int value)
+  {
+    _apprenticeshipyear = value;
+  }
 
-  String bic;
+  String get salarygroup  => _salarygroup;
+
+  set salarygroup(String value)
+  {
+    _salarygroup = value;
+  }
+
+  double get grosssalary => _grosssalary;
+
+  set grosssalary(double value)
+  {
+    _grosssalary = value;
+  }
+
+  bool get isApprentice => _isApprentice;
+
+  set isApprentice(bool value)
+  {
+    _isApprentice = value;
+  }
 }
 
-class _GenerallSalaryData {
-  bool isAzubi;
+class StrikeDetails
+{
+  String _company;
+  double _weeklyhours;
+  double _striketime;
 
-  String ausbildung;
+  double get weeklyhours => _weeklyhours;
 
-  int ausbildungsjahr;
+  set weeklyhours(double value)
+  {
+    _weeklyhours = value;
+  }
 
-  String endgeldgruppe;
-}
+  double get striketime => _striketime;
 
-class _PersonalDetails {
-  String forename;
+  set striketime(double value)
+  {
+    _striketime = value;
+  }
 
-  String surname;
+  String get company => _company;
 
-  String birthday;
-
-  String email;
+  set company(String value)
+  {
+    _company = value;
+  }
 }

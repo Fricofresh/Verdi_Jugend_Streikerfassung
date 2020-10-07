@@ -65,7 +65,7 @@ class PersonalDetailsPage extends StatelessWidget {
   }
 
   Future<Object> buildPushNamed(BuildContext context) async {
-    var pref = UserModelProvider().getCurrendUser();
+    var pref = UserModelProvider().getCurrentUser();
     // TODO fix
     // pref.addData({createKey(PersonalDetailsPage.routeId): this._isMember});
     return Navigator.pushNamed(context, TelegramChannelPage.routeId);

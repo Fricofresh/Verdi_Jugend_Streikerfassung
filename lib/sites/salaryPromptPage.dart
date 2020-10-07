@@ -54,6 +54,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                 (
                    new TextField
                      (
+                      keyboardType: TextInputType.number,
                       enabled: _isrdcurrentsalaryenabled,
                       controller: new TextEditingController(),
                       decoration: InputDecoration
@@ -95,6 +96,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                new Expanded(child:
                   new TextField
                   (
+                     keyboardType: TextInputType.number,
                      enabled: _isrdchildallowanceenabled,
                      controller: new TextEditingController(),
                      decoration: InputDecoration
@@ -306,6 +308,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                   new Text('Azubi im '),
                   new Expanded(child: new TextField
                   (
+                     keyboardType: TextInputType.number,
                      controller: new TextEditingController(),
                      decoration: InputDecoration
                      (
@@ -332,6 +335,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                  new Text('Beschäftigte*r in der '),
                  new Expanded(child: new TextField
                     (
+                    keyboardType: TextInputType.number,
                     controller: new TextEditingController(),
                     decoration: InputDecoration
                        (
