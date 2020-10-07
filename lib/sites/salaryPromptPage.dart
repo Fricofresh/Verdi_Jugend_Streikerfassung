@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 import 'package:verdi_jugend_streikerfassung/sites/transferarrangements.dart';
 
@@ -21,9 +22,13 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
   int _rdgroupsalaryvalue = 0;
   int _rdgroupapprenticevalue = 0;
   int _rdgroupchildallowance = 0;
-  int _rdpartnerstriking = 9;
+  int _rdpartnerstriking = 0;
   bool _isrdcurrentsalaryenabled = true;
   bool _isrdchildallowanceenabled = true;
+  TextEditingController _tecGrossSalary = new TextEditingController();
+  TextEditingController _tecApprenticeyear = new TextEditingController();
+  TextEditingController _tecSalaryGroup = new TextEditingController();
+  TextEditingController _tecChildCount = new TextEditingController();
   
   FirstWidgetMarker selectedfirstWidgetMarker = FirstWidgetMarker.empty;
   SecondWidgetMarker selectedsecondWidgetMarker = SecondWidgetMarker.apprentice;
@@ -56,7 +61,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                      (
                       keyboardType: TextInputType.number,
                       enabled: _isrdcurrentsalaryenabled,
-                      controller: new TextEditingController(),
+                      controller: _tecGrossSalary,
                       decoration: InputDecoration
                         (
                            border: OutlineInputBorder(),
@@ -98,7 +103,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                   (
                      keyboardType: TextInputType.number,
                      enabled: _isrdchildallowanceenabled,
-                     controller: new TextEditingController(),
+                     controller: _tecChildCount,
                      decoration: InputDecoration
                      (
                         border: OutlineInputBorder(),
@@ -142,7 +147,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                (
                   color: Colors.blue,
                   child: Text("Weiter"),
-                  onPressed: () =>  Navigator.pushNamed(context, TransferArrangementsPage.routeId)
+                  onPressed: () =>  _handleContinue()
                ),
                RaisedButton
                (
@@ -155,7 +160,8 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
     );
   }
 
-  Widget getEmptyWidget() {
+  Widget getEmptyWidget()
+  {
      return new Row();
   }
 
@@ -204,98 +210,8 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
             )
          ]);
   }
-
-  Widget getFirstCustomContainer()
-  {
-     switch (selectedfirstWidgetMarker)
-     {
-        case FirstWidgetMarker.empty:
-           {
-               return getEmptyWidget();
-           }
-        case FirstWidgetMarker.apprenticequestion:
-           {
-           return getApprenticeQuestionWidget();
-           }
-     }
-     return getEmptyWidget();
-  }
-
-  Widget getSecondCustomContainer()
-  {
-     switch (selectedsecondWidgetMarker)
-     {
-        case SecondWidgetMarker.apprentice:
-           {
-              return getApprenticeWidget();
-           }
-        case SecondWidgetMarker.employee:
-           {
-              return getEmployeeWidget();
-           }
-     }
-     return getEmptyWidget();
-  }
   
-  void _handleswitchsalaryquestion(value)
-  {
-    setState(()
-    {
-      _rdgroupsalaryvalue = value;
-      if(value == 1)
-      {
-        _isrdcurrentsalaryenabled = false;
-        selectedfirstWidgetMarker = FirstWidgetMarker.apprenticequestion;
-      }
-      else
-      {
-        _isrdcurrentsalaryenabled = true;
-        selectedfirstWidgetMarker = FirstWidgetMarker.empty;
-      }
-    });
-  }
-
-  void _handleswitchapprenticequestion(value)
-  {
-     setState(()
-     {
-        _rdgroupapprenticevalue = value;
-        if(value == 1)
-        {
-           selectedsecondWidgetMarker = SecondWidgetMarker.employee;
-        }
-        else
-        {
-           selectedsecondWidgetMarker = SecondWidgetMarker.apprentice;
-        }
-     });
-  }
-
-  void _handleswitchchildallowance(value)
-  {
-     setState(()
-     {
-        _rdgroupchildallowance = value;
-        if(value == 1)
-        {
-          _isrdchildallowanceenabled = false;
-        }
-        else
-        {
-           _isrdchildallowanceenabled = true;
-        }
-     });
-  }
-
-  void _handleswitchpartnerstriking(value)
-  {
-     setState(()
-     {
-        _rdpartnerstriking = value;
-     });
-  }
-
-  Widget getApprenticeWidget() 
+  Widget getApprenticeWidget()
   {
      return new Expanded(child: new Column
      (
@@ -309,7 +225,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                   new Expanded(child: new TextField
                   (
                      keyboardType: TextInputType.number,
-                     controller: new TextEditingController(),
+                     controller: _tecApprenticeyear,
                      decoration: InputDecoration
                      (
                         border: OutlineInputBorder(),
@@ -336,7 +252,7 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
                  new Expanded(child: new TextField
                     (
                     keyboardType: TextInputType.number,
-                    controller: new TextEditingController(),
+                    controller: _tecSalaryGroup,
                     decoration: InputDecoration
                        (
                        border: OutlineInputBorder(),
@@ -348,5 +264,138 @@ class SalaryPromptPageState extends State<SalaryPromptPage>
         ]
      ));
   }
+
+  Widget getFirstCustomContainer()
+  {
+     switch (selectedfirstWidgetMarker)
+     {
+        case FirstWidgetMarker.empty:
+           {
+              return getEmptyWidget();
+           }
+        case FirstWidgetMarker.apprenticequestion:
+           {
+              return getApprenticeQuestionWidget();
+           }
+     }
+     return getEmptyWidget();
+  }
+
+  Widget getSecondCustomContainer()
+  {
+     switch (selectedsecondWidgetMarker)
+     {
+        case SecondWidgetMarker.apprentice:
+           {
+              return getApprenticeWidget();
+           }
+        case SecondWidgetMarker.employee:
+           {
+              return getEmployeeWidget();
+           }
+     }
+     return getEmptyWidget();
+  }
   
-}
+  void _handleswitchsalaryquestion(value)
+  {
+     setState(()
+     {
+        _rdgroupsalaryvalue = value;
+        if(value == 1)
+        {
+           _isrdcurrentsalaryenabled = false;
+           selectedfirstWidgetMarker = FirstWidgetMarker.apprenticequestion;
+        }
+        else
+        {
+           _isrdcurrentsalaryenabled = true;
+           selectedfirstWidgetMarker = FirstWidgetMarker.empty;
+        }
+     });
+  }
+
+  void _handleswitchapprenticequestion(value)
+  {
+     setState(()
+     {
+        _rdgroupapprenticevalue = value;
+        if(value == 1)
+        {
+           selectedsecondWidgetMarker = SecondWidgetMarker.employee;
+        }
+        else
+        {
+           selectedsecondWidgetMarker = SecondWidgetMarker.apprentice;
+        }
+     });
+  }
+
+  void _handleswitchchildallowance(value)
+  {
+     setState(()
+     {
+        _rdgroupchildallowance = value;
+        if(value == 1)
+        {
+           _isrdchildallowanceenabled = false;
+        }
+        else
+        {
+           _isrdchildallowanceenabled = true;
+        }
+     });
+  }
+  
+  void _handleswitchpartnerstriking(value)
+  {
+     setState(()
+     {
+        _rdpartnerstriking = value;
+     });
+  }
+  
+  void _handleContinue()
+  {
+     _fillUserData();
+     Navigator.pushNamed(context, TransferArrangementsPage.routeId);
+  }
+  
+  void _fillUserData()
+  {
+      UserModel user = new UserModelProvider().getCurrentUser();
+      
+      if(_rdgroupsalaryvalue == 0)
+      {
+         user.flgKnowSalary = true;
+         user.salaryData.grosssalary = double.parse(_tecGrossSalary.text);
+      }
+      else
+      {
+         user.flgKnowSalary = false;
+         if(_rdgroupapprenticevalue == 0)
+         {
+            user.flgApprentice = true;
+            user.salaryData.apprenticeshipyear = int.parse(_tecApprenticeyear.text);
+         }
+         else
+         {
+            user.flgApprentice = false;
+            user.salaryData.salarygroup = _tecSalaryGroup.text;
+         }
+         
+      }
+      if(_rdgroupchildallowance == 0)
+      {
+         user.flgChildren = true;
+         user.children = int.parse(_tecChildCount.text);
+      }
+      else user.flgChildren = false;
+   
+      if(_rdpartnerstriking == 0) user.flgPartner = true;
+      else user.flgPartner = false;
+   }
+      
+  }
+  
+

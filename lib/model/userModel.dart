@@ -36,12 +36,12 @@ class UserModelProvider
 class UserModel
 {
   bool _flgMember;
-  bool _flgNumber;
-  bool _flgGrossSalary;
+  bool _flgMembershipNumber;
   bool _flgKnowSalary;
   bool _flgChildren;
   bool _flgPartner;
-  bool _flgAccount;
+  bool _flgStandardAccount;
+  bool _flgApprentice;
   
   String _membershipNumber;
   String _name;
@@ -55,12 +55,12 @@ class UserModel
   StrikeDetails _strikeDetails = new StrikeDetails();
 
   bool get flgMember  => _flgMember;
-  bool get flgAccount  => _flgAccount;
-  bool get flgMembershipNumber => _flgNumber;
-  bool get flgGrossSalary => _flgGrossSalary;
+  bool get flgStandardAccount  => _flgStandardAccount;
+  bool get flgMembershipNumber => _flgMembershipNumber;
   bool get flgKnowSalary => _flgKnowSalary;
   bool get flgChildren => _flgChildren;
   bool get flgPartner => _flgPartner;
+  bool get flgApprentice => _flgApprentice;
   String get membershipNumber => _membershipNumber;
   String get name => _name;
   String get prename => _prename;
@@ -77,19 +77,14 @@ class UserModel
     _flgMember = value;
   }
   
-  set flgAccount(bool value)
+  set flgStandardAccount(bool value)
   {
-    _flgAccount = value;
+    _flgStandardAccount = value;
   }
   
   set flgMembershipNumber(bool value)
   {
-    _flgNumber = value;
-  }
-  
-  set flgGrossSalary(bool value)
-  {
-    _flgGrossSalary = value;
+    _flgMembershipNumber = value;
   }
   
   set flgKnowSalary(bool value)
@@ -105,6 +100,11 @@ class UserModel
   set flgPartner(bool value)
   {
     _flgPartner = value;
+  }
+
+  set flgApprentice(bool value)
+  {
+    _flgApprentice = value;
   }
   
   set membershipNumber(String value)

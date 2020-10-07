@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 import 'package:verdi_jugend_streikerfassung/sites/TelegramChannelPage.dart';
 
@@ -16,9 +17,11 @@ enum WidgetMarker {empty, manuell}
 
 class TransferArrangementsState extends State<TransferArrangementsPage>
 {
-  int _rdgroupaccountchooser = 0;
-
-  WidgetMarker selectedWidgetMarker = WidgetMarker.manuell;
+   
+   int _rdgroupaccountchooser = 0;
+   TextEditingController _teciban = new TextEditingController();
+   TextEditingController _tecbic = new TextEditingController();
+   WidgetMarker selectedWidgetMarker = WidgetMarker.manuell;
   
   @override
   Widget build(BuildContext context)
@@ -91,7 +94,7 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
                      new Flexible(child:
                         new TextField
                            (
-                              controller: new TextEditingController(),
+                              controller: _teciban,
                               decoration: InputDecoration
                               (
                                  border: OutlineInputBorder(),
@@ -105,7 +108,7 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
                   new Flexible(child:
                   new TextField
                      (
-                     controller: new TextEditingController(),
+                     controller: _tecbic,
                      decoration: InputDecoration
                         (
                         border: OutlineInputBorder(),
@@ -156,6 +159,7 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
   
   void _handleContinue()
   {
+     _fillUserData();
      if(_rdgroupaccountchooser == 0)
       {
          _sendData();
@@ -179,9 +183,27 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
      Navigator.pushNamed(context, TelegramChannelPage.routeId);
   }
   
-  void _sendData()
+  void _fillUserData()
   {
-     //TODO: implement
+     UserModel user = new UserModelProvider().getCurrentUser();
+     if(_rdgroupaccountchooser == 0)
+     {
+        user.flgStandardAccount = false;
+        user.iban = _teciban.text;
+        user.bic = _tecbic.text;
+     }
+     else user.flgStandardAccount = true;
+  }
+  
+  void _sendData() async
+  {
+      Future future = new UserModelProvider().saveAndResetCurrentUser();
+      await future.then((value) => _showNotification(true)).whenComplete(() => _showNotification(false));
+  }
+  
+  void _showNotification(bool successful)
+  {
+  
   }
 }
 
