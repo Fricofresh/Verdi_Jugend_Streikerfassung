@@ -7,19 +7,23 @@ class BaseLayout extends StatelessWidget {
 
   final List<Widget> children;
 
+  dynamic parantChildren;
+
   BaseLayout({@required this.title, @required this.children});
 
   @override
   Widget build(BuildContext context) {
+    children.map((e) => e);
     return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 5.0, 8.0, 20.0),
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.headline5,

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 import 'package:verdi_jugend_streikerfassung/sites/membershipNumberPage.dart';
 import 'package:verdi_jugend_streikerfassung/sites/wantBecomeMember.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
@@ -30,11 +31,13 @@ class _WelcomePageState extends State<WelcomePage> {
             RaisedButton(
               color: Colors.blue,
               child: Text("Na logo!"),
-              onPressed: () => Navigator.pushNamed(context, MembershipNumberPage.routeId),
+              onPressed: () =>
+                  Navigator.pushNamed(context, MembershipNumberPage.routeId),
             ),
             RaisedButton(
               child: Text("Ne noch nicht."),
-              onPressed: () => Navigator.pushNamed(context, WantBecomeMemberPage.routeId),
+              onPressed: () =>
+                  Navigator.pushNamed(context, WantBecomeMemberPage.routeId),
             ),
           ],
         ),
@@ -43,9 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void resetData() async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    if (!await pref.clear()) {
-      log("!!!!!!!! Daten konnten nicht gelöscht werden !!!!!!");
-    }
+    final UserModelProvider pref = UserModelProvider();
+    pref.resetCurrentUser();
   }
 }
