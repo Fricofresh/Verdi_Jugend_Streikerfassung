@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:verdi_jugend_streikerfassung/services/sendMessageProxy.dart';
 
-//part 'userModel.g.dart';
+part 'userModel.g.dart';
 
 class UserModelProvider
 {
@@ -76,9 +76,30 @@ class UserModel
   SalaryData get salaryData => _salaryData;
   StrikeDetails get strikeDetails => _strikeDetails;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$PersonModelFromJson(json);
+  UserModel();
+    /*this.flgMember;
+    this._flgMembershipNumber;
+    this._flgKnowSalary; // ähm ok
+    this._flgChildren; // anzahl muss doch gespeichert werden, wenn jememsch Kinder hat, damit erübrigt sich doch dieser Flag
+    this._flgPartner;
+    this._flgStandardAccount;
+    this._flgApprentice;
 
-  Map<String, dynamic> toJson() => _$PersonModelToJson(this);
+    this._membershipNumber;
+    this._name;
+    this._prename;
+    this._birthday;
+    String _email;
+    String _iban;
+    String _bic;
+    int _children;
+    SalaryData _salaryData = new SalaryData();
+    StrikeDetails _strikeDetails = new StrikeDetails();
+  })*/
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
   /*String toJson()
   {
@@ -180,6 +201,12 @@ class SalaryData
   String _salarygroup;
   int _apprenticeshipyear;
 
+  SalaryData();
+
+  factory SalaryData.fromJson(Map<String, dynamic> json) => _$SalaryDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SalaryDataToJson(this);
+
   int get apprenticeshipyear => _apprenticeshipyear;
 
   set apprenticeshipyear(int value)
@@ -215,6 +242,12 @@ class StrikeDetails
   String _company;
   double _weeklyhours;
   double _striketime;
+
+  StrikeDetails();
+
+  factory StrikeDetails.fromJson(Map<String, dynamic> json) => _$StrikeDetailsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StrikeDetailsToJson(this);
 
   double get weeklyhours => _weeklyhours;
 
