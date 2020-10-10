@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:verdi_jugend_streikerfassung/services/sendMessageProxy.dart';
+
+part 'userModel.g.dart';
 
 class UserModelProvider {
   static final UserModelProvider _instance = UserModelProvider._internal();
@@ -31,11 +34,12 @@ class UserModelProvider {
   }
 }
 
+@JsonSerializable(nullable: false)
 class UserModel {
   bool _flgMember;
-  bool _flgMembershipNumber;
-  bool _flgKnowSalary;
-  bool _flgChildren;
+  bool _flgMembershipNumber; // wenn eine Mitgliedsnummer vorhanden ist, dann braucht man doch diesen Flag nicht weil membershipNumber = ist Gewerkschaftsmitglied
+  bool _flgKnowSalary; // ähm ok
+  bool _flgChildren; // anzahl muss doch gespeichert werden, wenn jememsch Kinder hat, damit erübrigt sich doch dieser Flag
   bool _flgPartner;
   bool _flgStandardAccount;
   bool _flgApprentice;
@@ -68,6 +72,37 @@ class UserModel {
   int get children => _children;
   SalaryData get salaryData => _salaryData;
   StrikeDetails get strikeDetails => _strikeDetails;
+
+  UserModel();
+  /*this.flgMember;
+    this._flgMembershipNumber;
+    this._flgKnowSalary; // ähm ok
+    this._flgChildren; // anzahl muss doch gespeichert werden, wenn jememsch Kinder hat, damit erübrigt sich doch dieser Flag
+    this._flgPartner;
+    this._flgStandardAccount;
+    this._flgApprentice;
+
+    this._membershipNumber;
+    this._name;
+    this._prename;
+    this._birthday;
+    String _email;
+    String _iban;
+    String _bic;
+    int _children;
+    SalaryData _salaryData = new SalaryData();
+    StrikeDetails _strikeDetails = new StrikeDetails();
+  })*/
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  /*String toJson()
+  {
+    String result = jsonEncode(this);
+    return result;
+  }*/
 
   set flgMember(bool value) {
     _flgMember = value;
@@ -136,18 +171,20 @@ class UserModel {
   set salaryData(SalaryData value) {
     _salaryData = value;
   }
-
-  String toJson() {
-    String result = jsonEncode(this);
-    return result;
-  }
 }
 
+@JsonSerializable()
 class SalaryData {
   bool _isApprentice;
   double _grosssalary;
   String _salarygroup;
   int _apprenticeshipyear;
+
+  SalaryData();
+
+  factory SalaryData.fromJson(Map<String, dynamic> json) => _$SalaryDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SalaryDataToJson(this);
 
   int get apprenticeshipyear => _apprenticeshipyear;
 
@@ -174,10 +211,17 @@ class SalaryData {
   }
 }
 
+@JsonSerializable()
 class StrikeDetails {
   String _company;
   double _weeklyhours;
   double _striketime;
+
+  StrikeDetails();
+
+  factory StrikeDetails.fromJson(Map<String, dynamic> json) => _$StrikeDetailsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StrikeDetailsToJson(this);
 
   double get weeklyhours => _weeklyhours;
 

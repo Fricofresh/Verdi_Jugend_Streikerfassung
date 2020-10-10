@@ -1,6 +1,6 @@
 {
-    "ws.host": "localhost",
-    "ws.port": 8080,
+    "ws.host": "https://localhost",
+    "ws.port": 8443,
     "ws.path": "/v1/users",
 
     "client.cert.path": "somepath",
