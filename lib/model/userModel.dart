@@ -40,12 +40,13 @@ class UserModelProvider
 class UserModel
 {
   bool _flgMember;
-  bool _flgMembershipNumber;
-  bool _flgKnowSalary;
-  bool _flgChildren;
+  bool _flgMembershipNumber; // wenn eine Mitgliedsnummer vorhanden ist, dann braucht man doch diesen Flag nicht weil membershipNumber = ist Gewerkschaftsmitglied
+  bool _flgKnowSalary; // ähm ok
+  bool _flgChildren; // anzahl muss doch gespeichert werden, wenn jememsch Kinder hat, damit erübrigt sich doch dieser Flag
   bool _flgPartner;
   bool _flgStandardAccount;
   bool _flgApprentice;
+
   String _membershipNumber;
   String _name;
   String _prename;
@@ -57,8 +58,8 @@ class UserModel
   SalaryData _salaryData = new SalaryData();
   StrikeDetails _strikeDetails = new StrikeDetails();
 
-  bool get flgMember  => _flgMember;
-  bool get flgStandardAccount  => _flgStandardAccount;
+  bool get flgMember => _flgMember;
+  bool get flgStandardAccount => _flgStandardAccount;
   bool get flgMembershipNumber => _flgMembershipNumber;
   bool get flgKnowSalary => _flgKnowSalary;
   bool get flgChildren => _flgChildren;
