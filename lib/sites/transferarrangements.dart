@@ -139,7 +139,8 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
   {
      showDialog(
         context: context,
-        builder: (BuildContext context){
+        builder: (BuildContext context)
+        {
            return AlertDialog
            (
               title: Text('Achtung!'),
@@ -197,8 +198,8 @@ class TransferArrangementsState extends State<TransferArrangementsPage>
   
   void _sendData() async
   {
-      Future future = new UserModelProvider().saveAndResetCurrentUser();
-      await future.then((value) => _showNotification(true)).whenComplete(() => _showNotification(false));
+      //Future future = new UserModelProvider().saveAndResetCurrentUser();
+     //await future.then((value) => _showNotification(true)).whenComplete(() => _showNotification(false));
   }
   
   void _showNotification(bool successful)

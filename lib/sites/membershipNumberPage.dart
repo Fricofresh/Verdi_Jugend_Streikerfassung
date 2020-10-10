@@ -256,7 +256,6 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
   void _handleContinue()
   {
      _fillUserData();
-     
      Navigator.pushNamed(context, SalaryPromptPage.routeId);
   }
   

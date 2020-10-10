@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:verdi_jugend_streikerfassung/services/sendMessageProxy.dart';
+
+//part 'userModel.g.dart';
 
 class UserModelProvider
 {
@@ -33,6 +36,7 @@ class UserModelProvider
   }
 }
 
+@JsonSerializable(nullable: false)
 class UserModel
 {
   bool _flgMember;
@@ -42,7 +46,6 @@ class UserModel
   bool _flgPartner;
   bool _flgStandardAccount;
   bool _flgApprentice;
-  
   String _membershipNumber;
   String _name;
   String _prename;
@@ -71,6 +74,16 @@ class UserModel
   int get children => _children;
   SalaryData get salaryData => _salaryData;
   StrikeDetails get strikeDetails => _strikeDetails;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => _$PersonModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PersonModelToJson(this);
+
+  /*String toJson()
+  {
+    String result = jsonEncode(this);
+    return result;
+  }*/
   
   set flgMember(bool value)
   {
@@ -157,12 +170,8 @@ class UserModel
     _salaryData = value;
   }
 
-  String toJson()
-  {
-    String result = jsonEncode(this);
-    return result;
-  }
 }
+@JsonSerializable()
 class SalaryData
 {
   bool _isApprentice;
@@ -199,6 +208,7 @@ class SalaryData
   }
 }
 
+@JsonSerializable()
 class StrikeDetails
 {
   String _company;
