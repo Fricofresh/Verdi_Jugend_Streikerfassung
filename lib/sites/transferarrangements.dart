@@ -114,16 +114,6 @@ class TransferArrangementsState extends State<TransferArrangementsPage> {
     }
   }
 
-  void _handleContinue() {
-    _fillUserData();
-    if (_rdgroupaccountchooser == 0) {
-      _sendData();
-      Navigator.pushNamed(context, TelegramChannelPage.routeId);
-    } else {
-      _showAlertDialog();
-    }
-  }
-
   void _handleCancelAlert() {
     _handleaccountchooserwitch(0);
     Navigator.of(context).pop();
@@ -135,14 +125,19 @@ class TransferArrangementsState extends State<TransferArrangementsPage> {
     Navigator.pushNamed(context, TelegramChannelPage.routeId);
   }
 
-  void _sendData() async {
-    //Future future = new UserModelProvider().saveAndResetCurrentUser();
-    //await future.then((value) => _showNotification(true)).whenComplete(() => _showNotification(false));
+  void _fillUserData() {
+    UserModel user = new UserModelProvider().getCurrentUser();
+    if (_rdgroupaccountchooser == 0) {
+      user.flgStandardAccount = false;
+      user.iban = _teciban.text;
+      user.bic = _tecbic.text;
+    } else
+      user.flgStandardAccount = true;
   }
 
   void _sendData() async {
-    // Future future = new UserModelProvider().saveAndResetCurrentUser();
-    // await future.then((value) => _showNotification(true)).whenComplete(() => _showNotification(false));
+    //Future future = new UserModelProvider().saveAndResetCurrentUser();
+    //await future.then((value) => _showNotification(true)).whenComplete(() => _showNotification(false));
   }
 
   void _showNotification(bool successful) {}

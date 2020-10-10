@@ -74,35 +74,10 @@ class UserModel {
   StrikeDetails get strikeDetails => _strikeDetails;
 
   UserModel();
-  /*this.flgMember;
-    this._flgMembershipNumber;
-    this._flgKnowSalary; // ähm ok
-    this._flgChildren; // anzahl muss doch gespeichert werden, wenn jememsch Kinder hat, damit erübrigt sich doch dieser Flag
-    this._flgPartner;
-    this._flgStandardAccount;
-    this._flgApprentice;
-
-    this._membershipNumber;
-    this._name;
-    this._prename;
-    this._birthday;
-    String _email;
-    String _iban;
-    String _bic;
-    int _children;
-    SalaryData _salaryData = new SalaryData();
-    StrikeDetails _strikeDetails = new StrikeDetails();
-  })*/
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserModelToJson(this);
-
-  /*String toJson()
-  {
-    String result = jsonEncode(this);
-    return result;
-  }*/
+  String toJson() => jsonEncode(_$UserModelToJson(this));
 
   set flgMember(bool value) {
     _flgMember = value;
