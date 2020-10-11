@@ -7,7 +7,7 @@ class BaseLayout extends StatelessWidget {
 
   final List<Widget> children;
 
-  dynamic parantChildren;
+  dynamic parentChildren;
 
   BaseLayout({@required this.title, @required this.children});
 

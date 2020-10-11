@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
 import 'package:verdi_jugend_streikerfassung/sites/salaryPromptPage.dart';
 import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
+import 'package:intl/intl.dart';
 
 class MembershipNumberPage extends StatefulWidget {
   static const String routeId = "/membershipNumber";
@@ -11,7 +12,8 @@ class MembershipNumberPage extends StatefulWidget {
   MembershipNumberPageState createState() => MembershipNumberPageState();
 }
 
-class MembershipNumberPageState extends State<MembershipNumberPage> {
+class MembershipNumberPageState extends State<MembershipNumberPage>
+{
   TextEditingController _tecBirthday = new TextEditingController();
   TextEditingController _tecMembershipNumber = new TextEditingController();
   TextEditingController _tecName = new TextEditingController();
@@ -20,46 +22,56 @@ class MembershipNumberPageState extends State<MembershipNumberPage> {
   TextEditingController _tecWeeklyHours = new TextEditingController();
   TextEditingController _tecStrikeTime = new TextEditingController();
 
-  int _radiobuttonvalue = 0;
+  int _radiobuttonvalue = 1;
   bool _isrdmitgliedsnummerenabled = true;
   bool _isrdnomitgliedsnummerenabled = false;
 
   @override
-  Widget build(BuildContext context) {
-    return BaseLayout(title: """Bitte trage hier deine Mitgliedsnummer ein.
-(Steht auf deinem Mitgliedsausweis oder im Betreff der Abbuchung in deiner Kontoumsatzanzeige)""", children: <Widget>[
-      new Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Radio(
-            value: 0,
-            groupValue: _radiobuttonvalue,
-            onChanged: (value) => _handleswitch(value),
+  Widget build(BuildContext context)
+  {
+    return BaseLayout
+    (
+       title: """Bitte trage hier deine Mitgliedsnummer ein.
+           (Steht auf deinem Mitgliedsausweis oder
+       im Betreff der Abbuchung in deiner Kontoumsatzanzeige)""",
+       children: <Widget>
+       [
+          new Row
+          (
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>
+              [
+                 new Radio
+                 (
+                    value: 0,
+                    groupValue: _radiobuttonvalue,
+                    onChanged: (value) => _handleswitch(value),
+                 ),
+                 new Flexible
+                 (
+                    fit: FlexFit.loose,
+                    child: (new TextField
+                    (
+                      keyboardType: TextInputType.number,
+                      enabled: _isrdmitgliedsnummerenabled,
+                      controller: _tecMembershipNumber,
+                      decoration: InputDecoration
+                      (
+                        border: OutlineInputBorder(),
+                        labelText: 'Mitgliedsnummer',
+                      )
+                    ))
+                 )
+              ],
           ),
-          new Flexible(
-            fit: FlexFit.loose,
-            child: (new TextField(
-              keyboardType: TextInputType.number,
-              enabled: _isrdmitgliedsnummerenabled,
-              controller: _tecMembershipNumber,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Mitgliedsnummer',
-              ),
-            )),
-          ),
-        ],
-      ),
-      new Row(
-        children: <Widget>[
-          new Radio(
-            value: 1,
-            groupValue: _radiobuttonvalue,
-            onChanged: (value) => _handleswitch(value),
-          ),
-          new Text('Habe ich grade nicht da :/')
-        ],
-      ),
+      new Row(children: <Widget>[
+        new Radio(
+          value: 1,
+          groupValue: _radiobuttonvalue,
+          onChanged: (value) => _handleswitch(value),
+        ),
+        new Text('Habe ich grade nicht da :/')
+      ]),
       new Row(children: <Widget>[
         new Flexible(
             child: new TextField(
@@ -89,12 +101,13 @@ class MembershipNumberPageState extends State<MembershipNumberPage> {
                   labelText: 'Geburtsdatum',
                 ),
                 enabled: _isrdnomitgliedsnummerenabled,
-                onTap: () async {
+                onTap: () async
+                {
                   DateTime date = DateTime(1900);
                   FocusScope.of(context).requestFocus(new FocusNode());
 
                   date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
-                  _tecBirthday.text = date.toIso8601String(); // TODO: Nullpointerexception wenn kein Datum ausgewäht wird
+                  _tecBirthday.text = DateFormat("dd-MM-yyyy").format(date);//.toIso8601String(); // TODO: Nullpointerexception wenn kein Datum ausgewäht wird
                 }))
       ]),
       new Row(children: <Widget>[
@@ -110,21 +123,20 @@ class MembershipNumberPageState extends State<MembershipNumberPage> {
         new Flexible(
             child: new TextField(
                 controller: _tecWeeklyHours,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(signed: false, decimal: true),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Wochenarbeitzszeit in Stunden',
+                  labelText: 'Wochenarbeitszeit in Stunden',
                 )))
       ]),
       new Row(children: <Widget>[
         new Flexible(
             child: new TextField(
                 controller: _tecStrikeTime,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(signed: false, decimal: true),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Durch Streik ausgefallene Stunden (ohne '
-                      'Pausen!',
+                  labelText: 'Durch Streik ausgefallene Stunden (ohne Pausen)',
                 )))
       ]),
       new ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
@@ -138,25 +150,32 @@ class MembershipNumberPageState extends State<MembershipNumberPage> {
     ]);
   }
 
-  void _handleswitch(value) {
-    setState(() {
+  void _handleswitch(value)
+  {
+    setState(()
+    {
       _radiobuttonvalue = value;
-      if (value == 1) {
+      if (value == 1)
+      {
         _isrdmitgliedsnummerenabled = false;
         _isrdnomitgliedsnummerenabled = true;
-      } else {
+      }
+      else
+      {
         _isrdmitgliedsnummerenabled = true;
         _isrdnomitgliedsnummerenabled = false;
       }
     });
   }
 
-  void _handleContinue() {
+  void _handleContinue()
+  {
     _fillUserData();
     Navigator.pushNamed(context, SalaryPromptPage.routeId);
   }
 
-  void _fillUserData() {
+  void _fillUserData()
+  {
     UserModel user = new UserModelProvider().getCurrentUser();
 
     user.flgMember = true;
@@ -164,10 +183,13 @@ class MembershipNumberPageState extends State<MembershipNumberPage> {
     user.strikeDetails.weeklyhours = double.parse(_tecWeeklyHours.text);
     user.strikeDetails.striketime = double.parse(_tecStrikeTime.text);
 
-    if (_isrdmitgliedsnummerenabled) {
+    if (_isrdmitgliedsnummerenabled)
+    {
       user.flgMembershipNumber = true;
       user.membershipNumber = _tecMembershipNumber.text;
-    } else {
+    }
+    else
+    {
       user.name = _tecName.text;
       user.prename = _tecPreName.text;
       user.birthday = _tecBirthday.text;

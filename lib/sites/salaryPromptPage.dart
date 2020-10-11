@@ -17,8 +17,8 @@ enum SecondWidgetMarker { apprentice, employee }
 class SalaryPromptPageState extends State<SalaryPromptPage> {
   int _rdgroupsalaryvalue = 0;
   int _rdgroupapprenticevalue = 0;
-  int _rdgroupchildallowance = 0;
-  int _rdpartnerstriking = 0;
+  int _rdgroupchildallowance = 1;
+  int _rdpartnerstriking = 1;
   bool _isrdcurrentsalaryenabled = true;
   bool _isrdchildallowanceenabled = true;
   TextEditingController _tecGrossSalary = new TextEditingController();
