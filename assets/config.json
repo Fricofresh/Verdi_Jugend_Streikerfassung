@@ -1,11 +1,11 @@
 {
-    "ws.host": "https://localhost",
+    "ws.host": "https://10.0.2.2",
     "ws.port": 8443,
     "ws.path": "/v1/users",
 
-    "client.cert.path": "store/localhost.crt",
+    "client.cert.path": "assets/store/localhost.crt",
     "client.cert.password": "somepassword",
-    "client.privatekey.path": "store/localhost.key",
+    "client.privatekey.path": "assets/store/localhost.key",
 
     "client.privatekey.password": "somepassword"
-}
+} 
