@@ -20,15 +20,14 @@ class MembershipNumberPageState extends State<MembershipNumberPage> {
   TextEditingController _tecWeeklyHours = new TextEditingController();
   TextEditingController _tecStrikeTime = new TextEditingController();
 
-  int _radiobuttonvalue = 1;
+  int _radiobuttonvalue = 0;
   bool _isrdmitgliedsnummerenabled = true;
   bool _isrdnomitgliedsnummerenabled = false;
 
   @override
   Widget build(BuildContext context) {
     return BaseLayout(title: """Bitte trage hier deine Mitgliedsnummer ein.
-           (Steht auf deinem Mitgliedsausweis oder
-       im Betreff der Abbuchung in deiner Kontoumsatzanzeige)""", children: <Widget>[
+(Steht auf deinem Mitgliedsausweis oder im Betreff der Abbuchung in deiner Kontoumsatzanzeige)""", children: <Widget>[
       new Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -38,25 +37,29 @@ class MembershipNumberPageState extends State<MembershipNumberPage> {
             onChanged: (value) => _handleswitch(value),
           ),
           new Flexible(
-              fit: FlexFit.loose,
-              child: (new TextField(
-                  keyboardType: TextInputType.number,
-                  enabled: _isrdmitgliedsnummerenabled,
-                  controller: _tecMembershipNumber,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Mitgliedsnummer',
-                  ))))
+            fit: FlexFit.loose,
+            child: (new TextField(
+              keyboardType: TextInputType.number,
+              enabled: _isrdmitgliedsnummerenabled,
+              controller: _tecMembershipNumber,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Mitgliedsnummer',
+              ),
+            )),
+          ),
         ],
       ),
-      new Row(children: <Widget>[
-        new Radio(
-          value: 1,
-          groupValue: _radiobuttonvalue,
-          onChanged: (value) => _handleswitch(value),
-        ),
-        new Text('Habe ich grade nicht da :/')
-      ]),
+      new Row(
+        children: <Widget>[
+          new Radio(
+            value: 1,
+            groupValue: _radiobuttonvalue,
+            onChanged: (value) => _handleswitch(value),
+          ),
+          new Text('Habe ich grade nicht da :/')
+        ],
+      ),
       new Row(children: <Widget>[
         new Flexible(
             child: new TextField(

@@ -3,9 +3,9 @@
     "ws.port": 8443,
     "ws.path": "/v1/users",
 
-    "client.cert.path": "somepath",
+    "client.cert.path": "store/localhost.crt",
     "client.cert.password": "somepassword",
+    "client.privatekey.path": "store/localhost.key",
 
-    "client.privatekey.path": "somepath",
     "client.privatekey.password": "somepassword"
 }

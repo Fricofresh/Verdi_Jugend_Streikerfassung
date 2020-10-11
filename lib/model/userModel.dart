@@ -159,7 +159,7 @@ class SalaryData {
 
   factory SalaryData.fromJson(Map<String, dynamic> json) => _$SalaryDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SalaryDataToJson(this);
+  String toJson() => jsonEncode(_$SalaryDataToJson(this));
 
   int get apprenticeshipyear => _apprenticeshipyear;
 
@@ -196,7 +196,7 @@ class StrikeDetails {
 
   factory StrikeDetails.fromJson(Map<String, dynamic> json) => _$StrikeDetailsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$StrikeDetailsToJson(this);
+  String toJson() => jsonEncode(_$StrikeDetailsToJson(this));
 
   double get weeklyhours => _weeklyhours;
 

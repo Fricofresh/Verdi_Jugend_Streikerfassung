@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
   static LocalStorageService _instance;
@@ -33,5 +36,13 @@ class LocalStorageService {
     var value = _preferences.get(key);
     // print('(TRACE) LocalStorageService:_getFromDisk. key: $key value: $value');
     return value;
+  }
+
+  Future<File> writeToFile({String filePath, String stringToWrite}) async {
+    Directory appdoc = await getExternalStorageDirectory();
+    File localFile = File(appdoc.path + filePath);
+    localFile.writeAsString(stringToWrite, mode: FileMode.append);
+    print(localFile.absolute);
+    return localFile;
   }
 }

@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
+import 'package:verdi_jugend_streikerfassung/services/localStorageService.dart';
 
 class SendMessageProxy {
   bool _saveToFile = true;
@@ -36,11 +35,13 @@ class SendMessageProxy {
   }
 
   void writeData() async {
-    Directory appdoc = await getApplicationDocumentsDirectory();
     var model = UserModelProvider().getCurrentUser();
-    // File localFile = File(appdoc.path + "/${model["forename"]}.${model.getData()["surname"]}.txt");
-    File localFile = File(appdoc.path + "/${TimeOfDay.now()}.txt"); // TODO REMOVE
-    localFile.writeAsString(model.toJson(), mode: FileMode.append);
-    print(localFile.absolute);
+    var date = DateTime.now();
+    var filePath = "/";
+    filePath += model.prename != null ? model.prename + "." + model.name : model.membershipNumber;
+    filePath += "_${date.hour}:${date.minute}:${date.second}.txt";
+    var stringToWrite = model.toJson();
+    var instance = await LocalStorageService.getInstance();
+    instance.writeToFile(filePath: filePath, stringToWrite: stringToWrite);
   }
 }
