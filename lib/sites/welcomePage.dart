@@ -1,12 +1,8 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 import 'package:verdi_jugend_streikerfassung/sites/membershipNumberPage.dart';
-import 'package:verdi_jugend_streikerfassung/sites/wantBecomeMember.dart';
 import 'package:verdi_jugend_streikerfassung/widgets/baseLayout.dart';
-import 'package:verdi_jugend_streikerfassung/services/sendMessageProxy.dart';
 
 class WelcomePage extends StatefulWidget
 {

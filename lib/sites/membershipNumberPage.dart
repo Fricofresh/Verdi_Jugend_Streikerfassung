@@ -4,7 +4,8 @@ import 'package:verdi_jugend_streikerfassung/sites/salaryPromptPage.dart';
 import 'package:verdi_jugend_streikerfassung/model/userModel.dart';
 import 'package:intl/intl.dart';
 
-class MembershipNumberPage extends StatefulWidget {
+class MembershipNumberPage extends StatefulWidget
+{
   static const String routeId = "/membershipNumber";
   MembershipNumberPage({Key key}) : super(key: key);
 
@@ -22,7 +23,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
   TextEditingController _tecWeeklyHours = new TextEditingController();
   TextEditingController _tecStrikeTime = new TextEditingController();
 
-  int _radiobuttonvalue = 1;
+  int _radiobuttonvalue = 0;
   bool _isrdmitgliedsnummerenabled = true;
   bool _isrdnomitgliedsnummerenabled = false;
 
@@ -50,7 +51,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                  new Flexible
                  (
                     fit: FlexFit.loose,
-                    child: (new TextField
+                    child: (new TextFormField
                     (
                       keyboardType: TextInputType.number,
                       enabled: _isrdmitgliedsnummerenabled,
@@ -59,7 +60,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                       (
                         border: OutlineInputBorder(),
                         labelText: 'Mitgliedsnummer',
-                      )
+                      ),
                     ))
                  )
               ],
@@ -107,7 +108,7 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                   FocusScope.of(context).requestFocus(new FocusNode());
 
                   date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1900), lastDate: DateTime(2100));
-                  _tecBirthday.text = DateFormat("dd-MM-yyyy").format(date);//.toIso8601String(); // TODO: Nullpointerexception wenn kein Datum ausgewäht wird
+                  _tecBirthday.text = DateFormat("dd.MM.yyyy").format(date);
                 }))
       ]),
       new Row(children: <Widget>[
@@ -139,8 +140,10 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
                   labelText: 'Durch Streik ausgefallene Stunden (ohne Pausen)',
                 )))
       ]),
-      new ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
-        RaisedButton(
+      new ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>
+      [
+        RaisedButton
+        (
           color: Colors.blue,
           child: Text("Weiter"),
           onPressed: () => _handleContinue(),
@@ -180,8 +183,8 @@ class MembershipNumberPageState extends State<MembershipNumberPage>
 
     user.flgMember = true;
     user.strikeDetails.company = _tecCompany.text;
-    user.strikeDetails.weeklyhours = double.parse(_tecWeeklyHours.text);
-    user.strikeDetails.striketime = double.parse(_tecStrikeTime.text);
+    user.strikeDetails.weeklyhours = double.parse(_tecWeeklyHours.text.replaceAll(",", "."));
+    user.strikeDetails.striketime = double.parse(_tecStrikeTime.text.replaceAll(",", "."));
 
     if (_isrdmitgliedsnummerenabled)
     {

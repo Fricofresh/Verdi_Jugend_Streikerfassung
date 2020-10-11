@@ -9,7 +9,8 @@ import 'package:verdi_jugend_streikerfassung/services/localStorageService.dart';
 class SendMessageProxy {
   bool _saveToFile = true;
 
-  Future<bool> sendData() async {
+  Future<bool> sendData() async
+  {
     if (_saveToFile) {
       writeData();
     }
@@ -43,7 +44,8 @@ class SendMessageProxy {
     return response.statusCode == HttpStatus.ok;
   }
 
-  void writeData() async {
+  void writeData() async
+  {
     var model = UserModelProvider().getCurrentUser();
     var date = DateTime.now();
     var filePath = "/";

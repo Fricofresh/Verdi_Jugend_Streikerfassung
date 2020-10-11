@@ -21,7 +21,8 @@ class UserModelProvider {
     return _currentUserModel;
   }
 
-  Future<bool> saveAndResetCurrentUser() async {
+  Future<bool> saveAndResetCurrentUser() async
+  {
     if (!await SendMessageProxy().sendData()) {
       return false;
     }
