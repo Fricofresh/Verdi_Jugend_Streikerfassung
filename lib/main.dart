@@ -10,6 +10,7 @@ String appTitle = "ver.di Jugend Streikerfassung";
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    LocalStorageService.getInstance();
     return MaterialApp(
       title: '$appTitle',
       theme: appTheme,
