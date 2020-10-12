@@ -9,8 +9,7 @@ import 'package:verdi_jugend_streikerfassung/services/localStorageService.dart';
 class SendMessageProxy {
   bool _saveToFile = true;
 
-  Future<bool> sendData() async
-  {
+  Future<bool> sendData() async {
     if (_saveToFile) {
       writeData();
     }
@@ -25,14 +24,8 @@ class SendMessageProxy {
     var port = settings.getInt("ws.port");
     var path = settings.getString("ws.path");
 
-    var context = SecurityContext.defaultContext;
-    ByteData certBytes = await rootBundle.load(settings.getString("client.cert.path"));
-    context.useCertificateChainBytes(certBytes.buffer.asUint8List());
-    ByteData privKeyBytes = await rootBundle.load(settings.getString("client.privatekey.path"));
-    context.usePrivateKeyBytes(privKeyBytes.buffer.asUint8List(), password: settings.getString("client.privatekey.password"));
-
     var url = Uri.parse("$host:$port$path");
-    HttpClient client = HttpClient(context: context)..badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
+    HttpClient client = HttpClient()..badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
 
     var request = await client.postUrl(url)
       ..headers.contentType = ContentType.json
@@ -44,8 +37,7 @@ class SendMessageProxy {
     return response.statusCode == HttpStatus.ok;
   }
 
-  void writeData() async
-  {
+  void writeData() async {
     var model = UserModelProvider().getCurrentUser();
     var date = DateTime.now();
     var filePath = "/";
