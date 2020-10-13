@@ -34,127 +34,140 @@ class SalaryPromptPageState extends State<SalaryPromptPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(title: """Wie hoch ist dein monatliches Bruttogehalt?""", children: <Widget>[
-      Form(
-        key: _formKey,
-        child: new Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+    return Form(
+      key: _formKey,
+      child: BaseLayout(
+        title: """Wie hoch ist dein monatliches Bruttogehalt?""",
+        children: <Widget>[
+          new Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new Radio(
+                value: 0,
+                groupValue: _rdgroupsalaryvalue,
+                onChanged: (value) => _handleswitchsalaryquestion(value),
+              ),
+              new Flexible(
+                fit: FlexFit.loose,
+                child: new TextFormField(
+                  keyboardType: TextInputType.number,
+                  enabled: _isrdcurrentsalaryenabled,
+                  controller: _tecGrossSalary,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (text) {
+                    if (_isrdcurrentsalaryenabled && text.isEmpty) {
+                      return MISSING_TEXT_MESSAGE;
+                    }
+                    return null;
+                  },
+                ),
+              ),
+            ],
+          ),
+          new Row(children: <Widget>[
             new Radio(
-              value: 0,
+              value: 1,
               groupValue: _rdgroupsalaryvalue,
               onChanged: (value) => _handleswitchsalaryquestion(value),
             ),
-            new Flexible(
-              fit: FlexFit.loose,
-              child: new TextFormField(
-                keyboardType: TextInputType.number,
-                enabled: _isrdcurrentsalaryenabled,
-                controller: _tecGrossSalary,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                validator: (text) {
-                  if (_isrdcurrentsalaryenabled && text.isEmpty) {
-                    return MISSING_TEXT_MESSAGE;
-                  }
-                  return null;
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-      new Row(children: <Widget>[
-        new Radio(
-          value: 1,
-          groupValue: _rdgroupsalaryvalue,
-          onChanged: (value) => _handleswitchsalaryquestion(value),
-        ),
-        new Text('Weiß ich nicht auswendig')
-      ]),
-      new Container(
-        child: getFirstCustomContainer(),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new Text(
-          'Hast du kindergeldberechtigte Kinder?',
-          style: Theme.of(context).textTheme.subtitle1,
-        ),
-      ),
-      new Row(children: [
-        new Radio(
-          value: 0,
-          groupValue: _rdgroupchildallowance,
-          onChanged: (value) => _handleswitchchildallowance(value),
-        ),
-        new Text('Ja'),
-        new Expanded(
-          child: Padding(
+            new Text('Weiß ich nicht auswendig')
+          ]),
+          new Container(
+            child: getFirstCustomContainer(),
+          ),
+          Padding(
             padding: const EdgeInsets.all(8.0),
-            child: new TextFormField(
-              keyboardType: TextInputType.number,
-              enabled: _isrdchildallowanceenabled,
-              controller: _tecChildCount,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Wieviele?',
-              ),
+            child: new Text(
+              'Hast du kindergeldberechtigte Kinder?',
+              style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
-        ),
-      ]),
-      new Row(
-        children: [
-          new Radio(
-            value: 1,
-            groupValue: _rdgroupchildallowance,
-            onChanged: (value) => _handleswitchchildallowance(value),
+          new Row(
+            children: [
+              new Radio(
+                value: 0,
+                groupValue: _rdgroupchildallowance,
+                onChanged: (value) => _handleswitchchildallowance(value),
+              ),
+              new Text('Ja'),
+              new Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new TextFormField(
+                    keyboardType: TextInputType.number,
+                    enabled: _isrdchildallowanceenabled,
+                    controller: _tecChildCount,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Wieviele?',
+                    ),
+                    validator: (text) {
+                      if (_isrdchildallowanceenabled && text.isEmpty) {
+                        return MISSING_TEXT_MESSAGE;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-          new Text('Nein'),
+          new Row(
+            children: [
+              new Radio(
+                value: 1,
+                groupValue: _rdgroupchildallowance,
+                onChanged: (value) => _handleswitchchildallowance(value),
+              ),
+              new Text('Nein'),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Text(
+              'Hast du eine Partner*in der/die ebenfalls am heutigen Streik beteiligt ist?',
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          new Row(
+            children: [
+              new Radio(
+                value: 0,
+                groupValue: _rdpartnerstriking,
+                onChanged: (value) => _handleswitchpartnerstriking(value),
+              ),
+              new Text('Ja'),
+            ],
+          ),
+          new Row(
+            children: [
+              new Radio(
+                value: 1,
+                groupValue: _rdpartnerstriking,
+                onChanged: (value) => _handleswitchpartnerstriking(value),
+              ),
+              new Text('Nein')
+            ],
+          ),
+          new ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                color: Colors.blue,
+                child: Text("Weiter"),
+                onPressed: () => _handleContinue(),
+              ),
+              RaisedButton(
+                child: Text("Zurück"),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
         ],
       ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new Text(
-          'Hast du eine Partner*in der/die ebenfalls am heutigen Streik beteiligt ist?',
-          style: Theme.of(context).textTheme.subtitle1,
-        ),
-      ),
-      new Row(
-        children: [
-          new Radio(
-            value: 0,
-            groupValue: _rdpartnerstriking,
-            onChanged: (value) => _handleswitchpartnerstriking(value),
-          ),
-          new Text('Ja'),
-        ],
-      ),
-      new Row(children: [
-        new Radio(
-          value: 1,
-          groupValue: _rdpartnerstriking,
-          onChanged: (value) => _handleswitchpartnerstriking(value),
-        ),
-        new Text('Nein')
-      ]),
-      new ButtonBar(
-        alignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RaisedButton(
-            color: Colors.blue,
-            child: Text("Weiter"),
-            onPressed: () => _handleContinue(),
-          ),
-          RaisedButton(
-            child: Text("Zurück"),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
-    ]);
+    );
   }
 
   Widget getEmptyWidget() {
@@ -162,36 +175,41 @@ class SalaryPromptPageState extends State<SalaryPromptPage> {
   }
 
   Widget getApprenticeQuestionWidget() {
-    return new Column(children: [
-      new Text('Ich bin'),
-      new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          new Radio(
-            value: 0,
-            groupValue: _rdgroupapprenticevalue,
-            onChanged: (value) => _handleswitchapprenticequestion(value),
-          ),
-          new Text('Azubi'),
-        ],
-      ),
-      new Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        new Radio(
-          value: 1,
-          groupValue: _rdgroupapprenticevalue,
-          onChanged: (value) => _handleswitchapprenticequestion(value),
+    return new Column(
+      children: [
+        new Text('Ich bin'),
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            new Radio(
+              value: 0,
+              groupValue: _rdgroupapprenticevalue,
+              onChanged: (value) => _handleswitchapprenticequestion(value),
+            ),
+            new Text('Azubi'),
+          ],
         ),
-        new Text('Beschäftigte*r'),
-      ]),
-      new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          new Container(
-            child: getSecondCustomContainer(),
-          ),
-        ],
-      ),
-    ]);
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            new Radio(
+              value: 1,
+              groupValue: _rdgroupapprenticevalue,
+              onChanged: (value) => _handleswitchapprenticequestion(value),
+            ),
+            new Text('Beschäftigte*r'),
+          ],
+        ),
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            new Container(
+              child: getSecondCustomContainer(),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget getApprenticeWidget() {
